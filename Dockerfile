@@ -1,3 +1,4 @@
+
 FROM php:8.2
 
 # Install system dependencies
@@ -5,12 +6,14 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libzip-dev \
     zip \
     unzip \
     git \
     curl
 
 # Install PHP extensions
+RUN docker-php-ext-install zip
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
 
