@@ -10,8 +10,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* ...existing code... */
+        /* Sidebar background override (paling bawah agar override) */
         .sidebar-bg {
-            background: #17687a url('/storage/background-sidebar.png') center 90% / cover no-repeat;
+            background: #17687a url('/storage/background-sidebar.png') no-repeat center bottom !important;
+            background-size: cover !important;
+            background-position: center bottom !important; /* petir selalu di bawah */
+            min-height: 100vh !important;
+            height: 100vh !important;
             background-attachment: local;
             transition: background 0.2s;
             backface-visibility: hidden;
@@ -25,9 +31,9 @@
     @stack('styles')
 </head>
 <body class="bg-gray-100">
-    <div class="flex flex-col md:flex-row min-h-screen w-full overflow-hidden">
+    <div class="flex min-h-screen w-full">
         <!-- Sidebar (responsive) -->
-        <aside class="w-full md:w-64 bg-gradient-to-b from-cyan-700 to-cyan-900 text-white lightning-bg flex-shrink-0 md:h-auto h-16 md:h-auto fixed md:static z-40 sidebar-bg transition-all duration-300" id="sidebar">
+        <aside class="w-64 h-screen min-h-full fixed top-0 left-0 z-40 sidebar-bg text-white flex-shrink-0 transition-all duration-300" id="sidebar">
             <div class="flex md:flex-col flex-row items-center md:items-stretch justify-between md:justify-start p-4 md:p-6 h-full">
 
                 <div class="flex items-center space-x-3 mb-8">
@@ -96,7 +102,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 flex flex-col overflow-y-auto ml-0 md:ml-64" style="margin-left: 16rem;">
             <!-- Header -->
             <header class="bg-white shadow-md w-full">
 

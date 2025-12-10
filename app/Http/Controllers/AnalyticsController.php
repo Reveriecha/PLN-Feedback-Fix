@@ -21,13 +21,14 @@ class AnalyticsController extends Controller
     public function getData(Request $request)
     {
         $period = $request->get('period', 'month');
+        $viewMore = $request->get('viewMore', false);
         
         return response()->json([
             'responses' => $this->getResponsesData($period),
             'satisfaction' => $this->getSatisfactionData(),
             'ratingPerInovasi' => $this->getRatingPerInovasi(),
-            'kepuasanPerInovasi' => $this->getKepuasanPerInovasi(),
-            'kepuasanPerUnit' => $this->getKepuasanPerUnit(),
+            'kepuasanPerInovasi' => $this->getKepuasanPerInovasi($viewMore ? null : 5),
+            'kepuasanPerUnit' => $this->getKepuasanPerUnit($viewMore ? null : 5),
         ]);
     }
     
@@ -110,13 +111,17 @@ class AnalyticsController extends Controller
             });
     }
     
-    private function getKepuasanPerInovasi()
+    private function getKepuasanPerInovasi($limit = null)
     {
-        return Inovasi::withCount('feedbacks')
+        $query = Inovasi::withCount('feedbacks')
             ->where('is_active', true)
-            ->orderByDesc('feedbacks_count')
-            ->limit(5)
-            ->get()
+            ->orderByDesc('feedbacks_count');
+        
+        if ($limit) {
+            $query->limit($limit);
+        }
+        
+        return $query->get()
             ->map(function($inovasi) {
                 return [
                     'nama' => $inovasi->nama_inovasi,
@@ -125,13 +130,17 @@ class AnalyticsController extends Controller
             });
     }
     
-    private function getKepuasanPerUnit()
+    private function getKepuasanPerUnit($limit = null)
     {
-        return Unit::withCount('feedbacks')
+        $query = Unit::withCount('feedbacks')
             ->where('is_active', true)
-            ->orderByDesc('feedbacks_count')
-            ->limit(5)
-            ->get()
+            ->orderByDesc('feedbacks_count');
+        
+        if ($limit) {
+            $query->limit($limit);
+        }
+        
+        return $query->get()
             ->map(function($unit) {
                 return [
                     'nama' => $unit->nama_unit,
