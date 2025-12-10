@@ -41,15 +41,7 @@ Aplikasi dashboard admin dan feedback inovasi untuk PLN, dibuat dengan Laravel 1
 	```bash
 	php artisan serve
 	```
-
-## Akun Admin Default
-- Email: admin@pln.co.id
-- Password: password
-
-## Deployment
-- Bisa di-deploy ke Railway, Vercel, atau server PHP manapun.
-- Untuk demo cepat, bisa gunakan XAMPP/Laragon di Windows.
-
+ 
 ## Kontribusi
 Pull request dan issue sangat diterima!
 
